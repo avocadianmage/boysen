@@ -22,3 +22,6 @@ function isContextElevated
     $adminRole = [Security.Principal.WindowsBuiltinRole]::Administrator
     ($userSecurity).IsInRole($adminRole)
 }
+
+# Import formatting file.
+Update-FormatData -PrependPath powershell/boysen.format.ps1xml
