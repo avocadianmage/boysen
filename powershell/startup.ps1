@@ -24,4 +24,4 @@ function isContextElevated
 }
 
 # Import formatting file.
-Update-FormatData -PrependPath powershell/boysen.format.ps1xml
+Update-FormatData -PrependPath $PSScriptRoot/boysen.format.ps1xml
