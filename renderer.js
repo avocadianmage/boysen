@@ -7,8 +7,6 @@ const powerShellArguments
     = '-nologo -noexit -command ". .\\powershell\\startup.ps1';
 const ptyProcessOptions = {
     name: 'xterm-color',
-    cols: 80,
-    rows: 30,
     cwd: process.cwd(),
     env: process.env
 };
@@ -50,13 +48,31 @@ xterm.attachCustomKeyEventHandler(ev => {
     return true;
 });
 
-// Size xterm appropriately, and ensure resizing later will do the same.
+// Size xterm and the forked shell appropriately, and ensure resizing later will
+// do the same.
 Terminal.applyAddon(fit);
-xterm.fit();
-window.onresize = () => xterm.fit();
+window.onresize = resize;
+resize();
 
 // Set up communication between xterm and node-pty.
 xterm.on('data', data => ptyProcess.write(data));
 ptyProcess.on('data', data => xterm.write(data));
 
 xterm.focus();
+
+function resize()
+{
+    // Resize xterm.
+    xterm.fit();
+    
+    // Resize the forked shell based on the new size of xterm.
+    const measureChar = document.querySelector(".xterm-char-measure-element");
+    const charRect = measureChar.getBoundingClientRect();
+
+    const canvas = document.querySelector(".xterm .xterm-screen canvas");
+    const canvasRect = canvas.getBoundingClientRect();
+
+    const cols = Math.floor(canvasRect.width / charRect.width);
+    const rows = Math.floor(canvasRect.height / charRect.height);
+    ptyProcess.resize(cols, rows);
+}
