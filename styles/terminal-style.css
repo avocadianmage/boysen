@@ -1,0 +1,29 @@
+body {
+    background: black;
+}
+
+#terminal-container {
+    position: fixed; 
+    top: 0px; bottom: 0px; left: 0px; right: 0px; 
+    padding: 8px;
+}
+
+/* Width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: black; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: orange; 
+}
