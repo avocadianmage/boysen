@@ -25,3 +25,6 @@ function isContextElevated
 
 # Import formatting file.
 Update-FormatData -PrependPath $PSScriptRoot/boysen.format.ps1xml
+
+# Import remoting scripts.
+Get-ChildItem -Recurse $PSScriptRoot\remoting\*.ps1 | ForEach-Object { . $_ }
