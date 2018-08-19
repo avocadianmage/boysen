@@ -3,26 +3,24 @@ const Terminal = require('xterm').Terminal;
 const fit = require('xterm/lib/addons/fit/fit');
 const remote = require('electron').remote;
 
-function resize()
-{
+function resize() {
     // Resize xterm.
     xterm.fit();
-    
+
     // Resize the forked shell based on the new size of xterm.
-    const measureChar = document.querySelector('.xterm-char-measure-element');
-    const charRect = measureChar.getBoundingClientRect();
+    const charElem = document.querySelector('.xterm-char-measure-element');
+    const charRect = charElem.getBoundingClientRect();
 
-    const canvas = document.querySelector('.xterm .xterm-screen canvas');
-    const canvasRect = canvas.getBoundingClientRect();
+    const canvasElem = document.querySelector('.xterm .xterm-screen canvas');
+    const canvasRect = canvasElem.getBoundingClientRect();
 
-    const cols = Math.floor(canvasRect.width / charRect.width);
-    const rows = Math.floor(canvasRect.height / charRect.height);
+    const cols = Math.floor(canvasRect.width / Math.floor(charRect.width));
+    const rows = Math.floor(canvasRect.height / Math.floor(charRect.height));
     ptyProcess.resize(cols, rows);
 }
 
 // Build commandline arguments to pass in to the PowerShell process.
-function getPowerShellArguments()
-{
+function getPowerShellArguments() {
     const scripts = document.getElementsByTagName('script');
     var path = decodeURI(scripts[scripts.length - 1].src);
     path = path.substring(8, path.lastIndexOf('/'));
@@ -38,17 +36,17 @@ const ptyProcessOptions = {
 
 // Initialize node-pty with PowerShell.
 const ptyProcess = pty.spawn(
-    'pwsh.exe', 
-    getPowerShellArguments(), 
+    'pwsh.exe',
+    getPowerShellArguments(),
     ptyProcessOptions);
 
 // If node-pty exits, also close the application.
 ptyProcess.on('exit', remote.getCurrentWindow().close);
 
-const terminalOptions = { 
+const terminalOptions = {
     fontFamily: 'Consolas',
     fontSize: 10,
-    cursorBlink: true, 
+    cursorBlink: true,
     theme: { cursor: 'orange', foreground: 'lightgray' }
 };
 
@@ -62,7 +60,7 @@ xterm.attachCustomKeyEventHandler(ev => {
     // If text is selcted, allow Ctrl+C for copy. Otherwise, it is used by the
     // terminal to break execution.
     if (ev.ctrlKey && ev.key === 'c') return !xterm.hasSelection();
-    
+
     // Allow Ctrl+V for paste.
     if (ev.ctrlKey && ev.key === 'v') return false;
 

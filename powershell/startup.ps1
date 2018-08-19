@@ -1,33 +1,5 @@
-# Specify prompt format.
-function prompt
-{
-    $workingDirectory = $ExecutionContext.SessionState.Path.CurrentLocation
-    $workingDirectory = getColoredString $workingDirectory (135, 255, 135)
-    If (isContextElevated) 
-    { 
-        $adminPrefix = getColoredString "[admin] " (255, 175, 0)
-    }
-    "$adminPrefix$workingDirectory$('$' * ($NestedPromptLevel + 1)) "
-}
-
-# Returns text of the specified color, build with ANSI escape sequences.
-function getColoredString($text, $rgb)
-{
-    $ESC = [char]27
-    "$ESC[38;2;$($rgb[0]);$($rgb[1]);$($rgb[2])m$text$ESC[0m"
-}
-
-# Determines if the currently running script has administrative privileges.
-function isContextElevated
-{
-    $user = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $userSecurity = New-Object Security.Principal.WindowsPrincipal $user
-    $adminRole = [Security.Principal.WindowsBuiltinRole]::Administrator
-    ($userSecurity).IsInRole($adminRole)
-}
-
 # Import formatting file.
 Update-FormatData -PrependPath $PSScriptRoot/boysen.format.ps1xml
 
-# Import remoting scripts.
-Get-ChildItem -Recurse $PSScriptRoot\remoting\*.ps1 | ForEach-Object { . $_ }
+# Import scripts.
+Get-ChildItem -Recurse $PSScriptRoot\scripts\*.ps1 | ForEach-Object { . $_ }
