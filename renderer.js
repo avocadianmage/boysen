@@ -43,13 +43,12 @@ const ptyProcess = pty.spawn(
     ptyProcessOptions);
 
 // If node-pty exits, also close the application.
-ptyProcess.on('exit', () => remote.getCurrentWindow().close());
+ptyProcess.on('exit', remote.getCurrentWindow().close);
 
 const terminalOptions = { 
-    cursorStyle: 'underline', 
-    cursorBlink: true, 
     fontFamily: 'Consolas',
     fontSize: 10,
+    cursorBlink: true, 
     theme: { cursor: 'orange', foreground: 'lightgray' }
 };
 
