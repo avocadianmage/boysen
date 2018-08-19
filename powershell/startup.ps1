@@ -2,9 +2,12 @@
 function prompt
 {
     $workingDirectory = $ExecutionContext.SessionState.Path.CurrentLocation
-    $rgb = If (isContextElevated) { (255, 175, 0) } Else { (135, 255, 135) }
-    $workingDirectory = getColoredString $workingDirectory $rgb
-    "$workingDirectory$('$' * ($nestedPromptLevel + 1)) "
+    $workingDirectory = getColoredString $workingDirectory (135, 255, 135)
+    If (isContextElevated) 
+    { 
+        $adminPrefix = getColoredString "[admin] " (255, 175, 0)
+    }
+    "$adminPrefix$workingDirectory$('$' * ($NestedPromptLevel + 1)) "
 }
 
 # Returns text of the specified color, build with ANSI escape sequences.
