@@ -3,6 +3,23 @@ const Terminal = require('xterm').Terminal;
 const fit = require('xterm/lib/addons/fit/fit');
 const remote = require('electron').remote;
 
+function resize()
+{
+    // Resize xterm.
+    xterm.fit();
+    
+    // Resize the forked shell based on the new size of xterm.
+    const measureChar = document.querySelector(".xterm-char-measure-element");
+    const charRect = measureChar.getBoundingClientRect();
+
+    const canvas = document.querySelector(".xterm .xterm-screen canvas");
+    const canvasRect = canvas.getBoundingClientRect();
+
+    const cols = Math.floor(canvasRect.width / charRect.width);
+    const rows = Math.floor(canvasRect.height / charRect.height);
+    ptyProcess.resize(cols, rows);
+}
+
 const powerShellArguments 
     = '-nologo -noexit -command ". .\\powershell\\startup.ps1';
 const ptyProcessOptions = {
@@ -59,20 +76,3 @@ xterm.on('data', data => ptyProcess.write(data));
 ptyProcess.on('data', data => xterm.write(data));
 
 xterm.focus();
-
-function resize()
-{
-    // Resize xterm.
-    xterm.fit();
-    
-    // Resize the forked shell based on the new size of xterm.
-    const measureChar = document.querySelector(".xterm-char-measure-element");
-    const charRect = measureChar.getBoundingClientRect();
-
-    const canvas = document.querySelector(".xterm .xterm-screen canvas");
-    const canvasRect = canvas.getBoundingClientRect();
-
-    const cols = Math.floor(canvasRect.width / charRect.width);
-    const rows = Math.floor(canvasRect.height / charRect.height);
-    ptyProcess.resize(cols, rows);
-}
