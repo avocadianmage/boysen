@@ -49,7 +49,7 @@ const terminalOptions = {
     cursorStyle: 'underline', 
     cursorBlink: true, 
     fontFamily: 'Consolas',
-    fontSize: 11,
+    fontSize: 10,
     theme: { cursor: 'orange', foreground: 'lightgray' }
 };
 
