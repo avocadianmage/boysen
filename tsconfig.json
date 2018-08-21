@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES2016",
+        "outDir": "ts-build",
+    },
+    "include": [
+        "ts/**/*"
+    ],
+    "exclude": []
+}

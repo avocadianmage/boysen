@@ -17,13 +17,13 @@ function createWindow() {
         width: 700, height: 500,
         minWidth: 400, minHeight: 100,
         autoHideMenuBar: true,
-        opacity: 0.8,
+        opacity: 0.85,
         icon: 'assets/favicon.ico'
     });
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
+        pathname: path.join(__dirname, '../index.html'),
         protocol: 'file:',
         slashes: true
     }));
