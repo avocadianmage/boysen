@@ -1,18 +1,18 @@
-const pty = require('node-pty');
-const Terminal = require('xterm').Terminal;
-const fit = require('xterm/lib/addons/fit/fit');
-const remote = require('electron').remote;
+import * as pty from 'node-pty';
+import {Terminal} from 'xterm';
+import * as fit from 'xterm/lib/addons/fit/fit';
+import { remote } from 'electron';
 
 function resize() {
     // Resize xterm.
-    xterm.fit();
+    (xterm as any).fit();
 
     // Resize the forked shell based on the new size of xterm.
     const charElem = document.querySelector('.xterm-char-measure-element');
-    const charRect = charElem.getBoundingClientRect();
+    const charRect = charElem!.getBoundingClientRect();
 
     const canvasElem = document.querySelector('.xterm .xterm-screen canvas');
-    const canvasRect = canvasElem.getBoundingClientRect();
+    const canvasRect = canvasElem!.getBoundingClientRect();
 
     const cols = Math.floor(canvasRect.width / Math.floor(charRect.width));
     const rows = Math.floor(canvasRect.height / Math.floor(charRect.height));
@@ -28,10 +28,10 @@ function getPowerShellArguments() {
     return '-nologo -noexit -command ". ' + path + '"';
 }
 
-const ptyProcessOptions = {
+const ptyProcessOptions: pty.IPtyForkOptions = {
     name: 'xterm-color',
     cwd: process.cwd(),
-    env: process.env
+    env: process.env as any
 };
 
 // Initialize node-pty with PowerShell.
@@ -52,7 +52,7 @@ const terminalOptions = {
 
 // Initialize xterm.js and attach it to the DOM.
 const xterm = new Terminal(terminalOptions);
-xterm.open(document.getElementById('terminal-container'));
+xterm.open(document.getElementById('terminal-container')!);
 
 // Declare custom keystroke handling.
 xterm.attachCustomKeyEventHandler(ev => {
@@ -81,3 +81,5 @@ xterm.on('data', data => ptyProcess.write(data));
 ptyProcess.on('data', data => xterm.write(data));
 
 xterm.focus();
+
+export = null;
