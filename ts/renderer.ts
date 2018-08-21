@@ -1,5 +1,5 @@
 import * as pty from 'node-pty';
-import {Terminal} from 'xterm';
+import {Terminal, ITerminalOptions} from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 import { remote } from 'electron';
 
@@ -43,7 +43,7 @@ const ptyProcess = pty.spawn(
 // If node-pty exits, also close the application.
 ptyProcess.on('exit', remote.getCurrentWindow().close);
 
-const terminalOptions = {
+const terminalOptions: ITerminalOptions = {
     fontFamily: 'Consolas',
     fontSize: 10,
     cursorBlink: true,
