@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig",
+    "compilerOptions": {
+        "lib": [
+            "es2016",
+            "scripthost",
+            "webworker"
+        ]
+    },
+    "include": [
+        "**/*"
+    ],
+    "exclude": []
+}

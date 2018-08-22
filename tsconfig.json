@@ -5,11 +5,10 @@
         "outDir": "ts-build",
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true
+        "noImplicitReturns": true
     },
     "include": [
-        "ts/**/*"
+        "src/ui/**/*"
     ],
     "exclude": []
 }
