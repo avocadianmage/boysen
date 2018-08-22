@@ -81,5 +81,3 @@ xterm.on('data', data => ptyProcess.write(data));
 ptyProcess.on('data', data => xterm.write(data));
 
 xterm.focus();
-
-export = null;
