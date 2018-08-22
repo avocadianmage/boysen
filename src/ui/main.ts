@@ -18,7 +18,10 @@ function createWindow() {
         minWidth: 400, minHeight: 100,
         autoHideMenuBar: true,
         opacity: 0.85,
-        icon: 'assets/favicon.ico'
+        icon: 'assets/favicon.ico',
+        webPreferences: {
+            nodeIntegrationInWorker: true
+        }
     });
 
     // and load the index.html of the app.

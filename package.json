@@ -13,7 +13,6 @@
     },
     "dependencies": {
         "node-pty": "^0.7.6",
-        "tiny-worker": "^2.1.2",
         "xterm": "^3.6.0"
     }
 }

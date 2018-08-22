@@ -3,8 +3,6 @@ import {Terminal, ITerminalOptions} from 'xterm';
 import * as fit from 'xterm/lib/addons/fit/fit';
 import { remote } from 'electron';
 
-var tinyWorker = require('tiny-worker'); //todo
-
 function resize() {
     // Resize xterm.
     (xterm as any).fit();
@@ -23,7 +21,7 @@ function resize() {
 
 }
 
-const worker = new tinyWorker("ts-build/pty-process.js");
+const worker = new Worker("ts-build/pty-process.js");
 
 const scripts = document.getElementsByTagName('script');
 const jsPath = decodeURI(scripts[scripts.length - 1].src);
