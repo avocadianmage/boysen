@@ -35,7 +35,7 @@ const ptyProcessOptions: pty.IPtyForkOptions = {
 
 // Initialize node-pty with PowerShell.
 const ptyProcess = pty.spawn(
-    'powershell.exe',
+    '..\\BoysenHost\\BoysenHost\\bin\\Debug\\BoysenHost.exe', //TODO: better path
     getPowerShellArguments(),
     ptyProcessOptions);
 
