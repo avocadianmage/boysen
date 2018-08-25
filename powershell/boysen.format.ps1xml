@@ -29,45 +29,5 @@
             </WideControl>
         </View>
 
-        <!-- Get-Location (pwd). -->
-        <View>
-            <Name>PathInfo</Name>
-            <ViewSelectedBy>
-                <TypeName>System.Management.Automation.PathInfo</TypeName>
-            </ViewSelectedBy>
-            <CustomControl>
-                <CustomEntries>
-                    <CustomEntry>
-                        <CustomItem>
-                            <ExpressionBinding>
-                                <PropertyName>Path</PropertyName>
-                            </ExpressionBinding>
-                        </CustomItem>
-                    </CustomEntry>
-                </CustomEntries>
-            </CustomControl>
-        </View>
-        
-        <!-- Invoke-WebRequest (wget). -->
-        <View>
-            <Name>Microsoft.PowerShell.Commands.WebResponseObject</Name>
-            <ViewSelectedBy>
-                <TypeName>Microsoft.PowerShell.Commands.WebResponseObject</TypeName>
-                <TypeName>Microsoft.PowerShell.Commands.HtmlWebResponseObject</TypeName>
-                <TypeName>Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject</TypeName>
-            </ViewSelectedBy>
-            <CustomControl>
-                <CustomEntries>
-                    <CustomEntry>
-                        <CustomItem>
-                            <ExpressionBinding>
-                                <PropertyName>Content</PropertyName>
-                            </ExpressionBinding>
-                        </CustomItem>
-                    </CustomEntry>
-                </CustomEntries>
-            </CustomControl>
-        </View>
-
     </ViewDefinitions>
 </Configuration>

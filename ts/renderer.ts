@@ -35,7 +35,7 @@ const ptyProcessOptions: pty.IPtyForkOptions = {
 
 // Initialize node-pty with PowerShell.
 const ptyProcess = pty.spawn(
-    'pwsh.exe',
+    'powershell.exe',
     getPowerShellArguments(),
     ptyProcessOptions);
 
