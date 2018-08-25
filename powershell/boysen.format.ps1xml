@@ -14,7 +14,7 @@
                 <WideEntries>
                     <WideEntry>
                         <WideItem>
-                            <ScriptBlock>"$([char]27)[38;2;220;220;220m$_"</ScriptBlock>
+                            <ScriptBlock>"$_"</ScriptBlock>
                         </WideItem>
                     </WideEntry>
                     <WideEntry>
@@ -22,7 +22,7 @@
                             <TypeName>System.IO.DirectoryInfo</TypeName>
                         </EntrySelectedBy>
                         <WideItem>
-                            <ScriptBlock>"$([char]27)[38;2;180;155;230m$_"</ScriptBlock>
+                            <ScriptBlock>"$([char]27)[94m$_$([char]27)[0m"</ScriptBlock>
                         </WideItem>
                     </WideEntry>
                 </WideEntries>
