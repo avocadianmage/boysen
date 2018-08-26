@@ -18,7 +18,6 @@ function createWindow() {
         width: 700, height: 500,
         minWidth: 400, minHeight: 100,
         autoHideMenuBar: true,
-        opacity: 0.85,
         icon: 'assets/favicon.ico'
     });
 

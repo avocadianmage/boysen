@@ -1,0 +1,34 @@
+.etabs-tabs {
+    background: #282828;
+}
+
+.etabs-tab.visible {
+    display: inline-block;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background: #404040;
+    border-right: 1px solid #303030;
+    color: #ffffff;   
+}
+
+.etabs-tab.visible.active {
+    background: #1e1e1e;
+}
+
+.etabs-tab-buttons, .etabs-tab-badge {
+    display: none;
+}
+
+.etabs-tab-title {
+    font: caption;
+    font-size: 10px;
+}
+
+.etabs-views {
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    bottom: 0;
+}

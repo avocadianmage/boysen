@@ -1,6 +1,5 @@
-body
-{
-    background: black;
+body {
+    background: #1e1e1e;
 }
 
 #terminal-container {
@@ -16,12 +15,12 @@ body
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: black; 
+    background: #1e1e1e;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #424242; 
 }
 
 /* Handle on hover */

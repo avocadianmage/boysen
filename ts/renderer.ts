@@ -43,7 +43,11 @@ const terminalOptions: ITerminalOptions = {
     fontFamily: 'Consolas',
     fontSize: 10,
     cursorBlink: true,
-    theme: { cursor: 'orange', foreground: 'lightgray' }
+    theme: { 
+        cursor: 'orange', 
+        foreground: 'lightgray', 
+        background: '#1e1e1e' 
+    }
 };
 
 // Initialize xterm.js and attach it to the DOM.
