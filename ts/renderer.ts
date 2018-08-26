@@ -1,11 +1,11 @@
 import * as pty from 'node-pty';
 import {Terminal, ITerminalOptions} from 'xterm';
-import * as fit from 'xterm/lib/addons/fit/fit';
+import { fit } from 'xterm/lib/addons/fit/fit';
 import { remote } from 'electron';
 
 function resize() {
     // Resize xterm.
-    (xterm as any).fit();
+    fit(xterm);
 
     // Resize the forked shell based on the new size of xterm.
     const charElem = document.querySelector('.xterm-char-measure-element');
@@ -39,9 +39,6 @@ const ptyProcess = pty.spawn(
     getPowerShellArguments(),
     ptyProcessOptions);
 
-// If node-pty exits, also close the application.
-ptyProcess.on('exit', remote.getCurrentWindow().close);
-
 const terminalOptions: ITerminalOptions = {
     fontFamily: 'Consolas',
     fontSize: 10,
@@ -60,18 +57,17 @@ xterm.attachCustomKeyEventHandler(ev => {
     // terminal to break execution.
     if (ev.ctrlKey && ev.key === 'c') return !xterm.hasSelection();
 
-    // Allow Ctrl+V for paste.
-    if (ev.ctrlKey && ev.key === 'v') return false;
-
-    // Alt+F4 should skip the terminal and be handled by the system.
+    // Shortcuts that should skip the terminal and be handled by the system.
     if (ev.altKey && ev.key === 'F4' && !ev.ctrlKey) return false;
+    if (ev.ctrlKey && ev.key === 'v') return false;
+    if (ev.ctrlKey && ev.key === 't') return false;
+    if (ev.ctrlKey && ev.key === 'w') return false;
 
     return true;
 });
 
 // Size xterm and the forked shell appropriately, and ensure resizing later will
 // do the same.
-Terminal.applyAddon(fit);
 window.onresize = resize;
 resize();
 
@@ -79,4 +75,14 @@ resize();
 xterm.on('data', data => ptyProcess.write(data));
 ptyProcess.on('data', data => xterm.write(data));
 
-xterm.focus();
+// Broadcast that the console title has changed.
+xterm.on('title', title => {
+    remote.getCurrentWindow().webContents.send('terminal-title-changed', title);
+});
+
+// Broadcast that node-pty exited.
+ptyProcess.on('exit', () => {
+    remote.getCurrentWindow().webContents.send('terminal-exited');
+});
+
+xterm.textarea.focus();

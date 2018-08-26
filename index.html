@@ -3,15 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="Stylesheet" href="node_modules/xterm/lib/xterm.css">
-    <link rel="Stylesheet" href="styles/terminal-style.css">
+    <link rel="stylesheet" href="node_modules/electron-tabs/electron-tabs.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
-    <div id="terminal-container"></div>
+    <div class="etabs-tabgroup">
+        <div class="etabs-tabs"></div>
+        <div class="etabs-buttons"></div>
+    </div>
+    <div class="etabs-views"></div>
+
+    <script>
+        require('./ts-build/tab-manager.js');
+    </script>
 </body>
-<script>
-    require('./ts-build/renderer.js');
-</script>
 
 </html>

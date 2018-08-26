@@ -9,10 +9,11 @@
     "repository": "https://github.com/avocadianmage/boysen",
     "author": "avocadianmage",
     "devDependencies": {
-        "electron": "^2.0.7",
+        "electron": "^2.0.8",
         "electron-rebuild": "^1.8.2"
     },
     "dependencies": {
+        "electron-tabs": "^0.9.4",
         "node-pty": "^0.7.6",
         "xterm": "^3.6.0"
     }
