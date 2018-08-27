@@ -38,7 +38,7 @@ window.onload = newTab;
 function newTab()
 {
     const tab = tabGroup.addTab({ 
-        title: 'Loading...',
+        title: 'Initializing…',
         src: 'terminal.html',
         active: true,
         iconURL: 'assets/terminal.ico',
