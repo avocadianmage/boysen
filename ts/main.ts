@@ -18,7 +18,7 @@ function createWindow() {
         width: 700, height: 500,
         minWidth: 400, minHeight: 100,
         autoHideMenuBar: true,
-        icon: 'assets/favicon.ico'
+        icon: 'assets/terminal.ico'
     });
 
     // and load the index.html of the app.

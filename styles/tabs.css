@@ -25,7 +25,7 @@
     cursor: pointer;
     user-select: none;
     font-family: "Consolas";
-    font-size: 12px;
+    font-size: 10px;
 }
 
 .etabs-views {
@@ -33,4 +33,11 @@
     width: 100%;
     top: 25px;
     bottom: 0;
+}
+
+.etabs-tab-icon > img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 4px;
 }

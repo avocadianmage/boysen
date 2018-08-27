@@ -41,6 +41,7 @@ function newTab()
         title: 'Loading...',
         src: 'terminal.html',
         active: true,
+        iconURL: 'assets/terminal.ico',
         webviewAttributes: {
             nodeintegration: true
         }
@@ -80,7 +81,7 @@ function getAdjacentTab(toTheLeft: boolean)
 
 // Right-truncate title text if it exceeds a max limit.
 function truncateTitle(title: string) {
-    const maxLength = 24;
+    const maxLength = 32;
     if (title.length > maxLength) {
         title = "…" + title.substring(title.length - maxLength + 1);
     }
