@@ -22,8 +22,10 @@
 }
 
 .etabs-tab-title {
-    font: caption;
-    font-size: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-family: "Consolas";
+    font-size: 12px;
 }
 
 .etabs-views {

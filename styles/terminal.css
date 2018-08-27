@@ -5,7 +5,7 @@ body {
 #terminal-container {
     position: fixed; 
     top: 0px; bottom: 0px; left: 0px; right: 0px; 
-    padding: 8px;
+    padding: 12px;
 }
 
 /* Width */
@@ -25,5 +25,5 @@ body {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: orange; 
+    background: #4f4f4f; 
 }
