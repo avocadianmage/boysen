@@ -1,5 +1,8 @@
 import * as TabGroup from 'electron-tabs';
 import { ipcRenderer, remote } from 'electron';
+import * as fs from 'fs';
+import * as path from 'path';
+import { exec } from 'child_process';
 
 const tabGroup = new TabGroup();
 
@@ -18,14 +21,14 @@ window.addEventListener('keydown', (ev) => {
     if (ev.ctrlKey && ev.key === 't') newTab();
 
     // Ctrl+W: close active tab.
-    if (ev.ctrlKey && ev.key === 'w') {
+    else if (ev.ctrlKey && ev.key === 'w') {
         // Stop default which closes the entire browser.
         ev.preventDefault(); 
         tabGroup.getActiveTab()!.close();
     }
 
     // Ctrl+Tab, Ctrl+Shift+Tab: cycle through tabs.
-    if (ev.ctrlKey && ev.key === 'Tab')
+    else if (ev.ctrlKey && ev.key === 'Tab')
     {
         const tab = getAdjacentTab(ev.shiftKey);
         if (tab) tab.activate();
@@ -41,11 +44,12 @@ function newTab()
         title: 'Initializing…',
         src: 'terminal.html',
         active: true,
-        iconURL: 'assets/terminal.ico',
         webviewAttributes: {
             nodeintegration: true
         }
     });
+
+    setTabIconFromShell(tab, "powershell");
     
     // When tab if closed, if it was the last one, close the window.
     tab.on('close', () => {
@@ -86,4 +90,42 @@ function truncateTitle(title: string) {
         title = "…" + title.substring(title.length - maxLength + 1);
     }
     return title;
+}
+
+function setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
+    const appDataPath = process.env.APPDATA;
+    const appName = require(__dirname + '/../package.json').name;
+    const iconPath 
+        = `${appDataPath}/${appName}/Cache/shell-icons/${exeName}.ico`;
+
+    // If icon file is already cached, use it.
+    if (fs.existsSync(iconPath)) 
+    {
+        tab.setIcon(iconPath);
+        return;
+    }
+
+    // When an icon has been extracted, save it to file and then use it.
+    const iconExtractor = require('icon-extractor');
+    iconExtractor.emitter.on('icon', (data: any) => {
+        createNeededDirectories(iconPath);
+        fs.writeFile(iconPath, data.Base64ImageData, 'base64', err => {
+            if (err) console.log(err);
+            else tab.setIcon(iconPath);
+        });
+    });
+
+    // Find the full file path of the shell executable and extract its icon.
+    exec('where ' + exeName, (err, stdout, stderr) => {
+        if (err) console.log(stderr);
+        else iconExtractor.getIcon(null, stdout.trim());
+    });
+}
+
+// Create any needed directories to ensure the specified file path can exist.
+function createNeededDirectories(filePath: string) {
+    const dirname = path.dirname(filePath);
+    if (fs.existsSync(dirname)) return;
+    createNeededDirectories(dirname);
+    fs.mkdirSync(dirname);
 }
