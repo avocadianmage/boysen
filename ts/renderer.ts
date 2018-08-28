@@ -21,9 +21,7 @@ function resize() {
 
 // Build commandline arguments to pass in to the PowerShell process.
 function getPowerShellArguments() {
-    var path = decodeURI(document.baseURI!);
-    path = path.substring(8, path.lastIndexOf('/'));
-    path = "'" + path + "/powershell/startup.ps1'";
+    const path = "'" + __dirname + "/../powershell/startup.ps1'";
     return '-nologo -noexit -command ". ' + path + '"';
 }
 
