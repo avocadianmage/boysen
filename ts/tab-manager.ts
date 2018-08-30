@@ -4,41 +4,50 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
 
-const tabGroup = new TabGroup();
+main();
 
-// Update tab title based on the current working directory of the terminal.
-ipcRenderer.on('terminal-title-changed', (event: Event, title: string) => {
-    tabGroup.getActiveTab()!.setTitle(truncateTitle(title));
-});
+function main() {
+    const tabGroup = new TabGroup();
 
-// Close the tab if the terminal has exited.
-ipcRenderer.on('terminal-exited', () => tabGroup.getActiveTab()!.close());
+    // Update tab title based on the current working directory of the terminal.
+    ipcRenderer.on('terminal-title-changed', (event: Event, title: string) => {
+        tabGroup.getActiveTab()!.setTitle(truncateTitle(title));
+    });
 
-// Bind keyboard events for tab manipulation.
-window.addEventListener('keydown', (ev) => {
+    // Close the tab if the terminal has exited.
+    ipcRenderer.on('terminal-exited', () => tabGroup.getActiveTab()!.close());
 
-    // Ctrl+T: add new tab.
-    if (ev.ctrlKey && ev.key === 't') newTab();
+    // Bind keyboard events for tab manipulation.
+    hookCustomKeyEvents(tabGroup);
 
-    // Ctrl+W: close active tab.
-    else if (ev.ctrlKey && ev.key === 'w') {
-        // Stop default which closes the entire browser.
-        ev.preventDefault(); 
-        tabGroup.getActiveTab()!.close();
-    }
+    // Create tab for initial terminal instance.
+    window.onload = () => newTab(tabGroup);
+}
 
-    // Ctrl+Tab, Ctrl+Shift+Tab: cycle through tabs.
-    else if (ev.ctrlKey && ev.key === 'Tab')
-    {
-        const tab = getAdjacentTab(ev.shiftKey);
-        if (tab) tab.activate();
-    }
-});
+function hookCustomKeyEvents(tabGroup: TabGroup)
+{
+    window.addEventListener('keydown', (ev) => {
 
-// Create tab for initial terminal instance.
-window.onload = newTab;
+        // Ctrl+T: add new tab.
+        if (ev.ctrlKey && ev.key === 't') newTab(tabGroup);
 
-function newTab()
+        // Ctrl+W: close active tab.
+        else if (ev.ctrlKey && ev.key === 'w') {
+            // Stop default which closes the entire browser.
+            ev.preventDefault(); 
+            tabGroup.getActiveTab()!.close();
+        }
+
+        // Ctrl+Tab, Ctrl+Shift+Tab: cycle through tabs.
+        else if (ev.ctrlKey && ev.key === 'Tab')
+        {
+            const tab = getAdjacentTab(tabGroup, ev.shiftKey);
+            if (tab) tab.activate();
+        }
+    });
+}
+
+function newTab(tabGroup: TabGroup)
 {
     const tab = tabGroup.addTab({ 
         title: 'Initializing…',
@@ -68,7 +77,7 @@ function newTab()
     );
 }
 
-function getAdjacentTab(toTheLeft: boolean)
+function getAdjacentTab(tabGroup: TabGroup, toTheLeft: boolean)
 {
     // Quit if there is only a single tab.
     const tabCount = tabGroup.getTabs().length;
