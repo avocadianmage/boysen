@@ -20,6 +20,12 @@ function main() {
     // Bind keyboard events for tab manipulation.
     hookCustomKeyEvents(tabGroup);
 
+    // Ensure the terminal in the active tab ends up with focus if the window is 
+    // re-focused.
+    remote.getCurrentWindow().on('focus', () => {
+        tabGroup.getActiveTab()!.webview.focus();
+    });
+
     // Create tab for initial terminal instance.
     window.onload = () => newTab(tabGroup);
 }

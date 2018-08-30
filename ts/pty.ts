@@ -12,7 +12,7 @@ function main() {
     // Initialize xterm.js and attach it to the DOM.
     const xterm = createTerminal(
         document.getElementById('terminal-container')!);
-        
+
     hookCustomKeyEvents(xterm);
 
     // Size xterm and the forked shell appropriately, and ensure resizing later
