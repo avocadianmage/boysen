@@ -21,8 +21,10 @@ function main() {
     hookCustomKeyEvents(tabGroup);
 
     // Ensure the terminal in the active tab ends up with focus if the window is 
-    // re-focused.
+    // re-focused. We blur first in case the web view is already getting focused
+    // (i.e. user clicks in the terminal area).
     remote.getCurrentWindow().on('focus', () => {
+        tabGroup.getActiveTab()!.webview.blur();
         tabGroup.getActiveTab()!.webview.focus();
     });
 
