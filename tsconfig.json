@@ -6,7 +6,11 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": [ "override-typings/*" ]
+        }
     },
     "include": [
         "ts/**/*"
