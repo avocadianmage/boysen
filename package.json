@@ -13,6 +13,8 @@
         "electron-rebuild": "^1.8.2"
     },
     "dependencies": {
+        "@types/dragula": "^2.1.33",
+        "dragula": "^3.7.2",
         "electron-tabs": "^0.9.4",
         "icon-extractor": "^1.0.3",
         "node-pty": "^0.7.6",

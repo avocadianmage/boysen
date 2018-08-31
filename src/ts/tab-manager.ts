@@ -1,4 +1,5 @@
 import * as TabGroup from 'electron-tabs';
+import * as dragula from 'dragula';
 import { ipcRenderer, remote } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -7,7 +8,13 @@ import { exec } from 'child_process';
 main();
 
 function main() {
-    const tabGroup = new TabGroup();
+
+    // Create tab group with drag and drop support.
+    const tabGroup = new TabGroup({
+        ready: (tabGroup) => {
+            dragula([ tabGroup.tabContainer ], { direction: "horizontal" });
+        }
+    });
 
     // Update tab title based on the current working directory of the terminal.
     ipcRenderer.on('terminal-title-changed', (event: Event, title: string) => {
