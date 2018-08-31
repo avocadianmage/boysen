@@ -39,7 +39,7 @@ function main() {
 
 // Build commandline arguments to pass in to the PowerShell process.
 function getPowerShellArguments() {
-    const path = "'" + __dirname + "/../powershell/startup.ps1'";
+    const path = "'" + __dirname + "/../src/powershell/startup.ps1'";
     return '-nologo -noexit -command ". ' + path + '"';
 }
 

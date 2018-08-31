@@ -9,11 +9,11 @@
         "noUnusedLocals": true,
         "baseUrl": ".",
         "paths": {
-            "*": [ "override-typings/*" ]
+            "*": [ "src/override-typings/*" ]
         }
     },
     "include": [
-        "ts/**/*"
+        "src/ts/**/*"
     ],
     "exclude": []
 }

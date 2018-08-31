@@ -1,6 +1,4 @@
 import * as electron from 'electron';
-import * as path from 'path';
-import * as url from 'url';
 
 // Module to control application life.
 const app = electron.app;
@@ -22,11 +20,7 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '../index.html'),
-        protocol: 'file:',
-        slashes: true
-    }));
+    mainWindow.loadFile('src/index.html');
     
     // Dereference the window object, usually you would store windows in an
     // array if your app supports multi windows, this is the time when you

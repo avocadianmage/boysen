@@ -80,9 +80,10 @@ function newTab(tabGroup: TabGroup)
     // the webview at that point, the tab will end up stealing focus since it 
     // goes through its focus event after mousedown.
     const htmlTabs = tabGroup.tabContainer.children;
-    htmlTabs[htmlTabs.length - 1].addEventListener(
-        'mouseup', () => tab.webview.focus()
-    );
+    htmlTabs[htmlTabs.length - 1].addEventListener('mouseup', () => {
+        tab.webview.blur();
+        tab.webview.focus();
+    });
 }
 
 function getAdjacentTab(tabGroup: TabGroup, toTheLeft: boolean)
