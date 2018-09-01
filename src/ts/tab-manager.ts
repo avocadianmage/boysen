@@ -34,9 +34,9 @@ function main() {
 // case the web view is already getting focused (i.e. user clicks in the 
 // terminal area).
 function focusTerminal(tabGroup: TabGroup) {
-    const activeTab = tabGroup.getActiveTab()!;
-    activeTab.webview.blur();
-    activeTab.webview.focus();
+    const webview = tabGroup.getActiveTab()!.webview;
+    webview.blur();
+    webview.focus();
 }
 
 function hookFocusEvents(tabGroup: TabGroup) {
@@ -93,14 +93,14 @@ function newTab(tabGroup: TabGroup)
     });
 
     // Ensure the webview contents of the active tab are properly focused
-    // when the tab is clicked. Note that we can't simply hook into the 'active'
-    // event of the tab due to it firing during mousedown. If we try to focus 
-    // the webview at that point, the tab will end up stealing focus since it 
-    // goes through its focus event after mousedown.
-    const htmlTabs = tabGroup.tabContainer.children;
-    htmlTabs[htmlTabs.length - 1].addEventListener('mouseup', () => {
-        focusTerminal(tabGroup);
-    });
+    // when the tab is clicked or dragged. Note that we can't simply hook into 
+    // the 'active' event of the tab due to it firing during mousedown. If we 
+    // try to focus the webview at that point, the tab will end up stealing 
+    // focus since it goes through its focus event after mousedown.
+    const htmlTabCollection = tabGroup.tabContainer.children;
+    const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
+    htmlTab.addEventListener('mouseup', () => focusTerminal(tabGroup));
+    htmlTab.addEventListener('dragend', () => focusTerminal(tabGroup));
 }
 
 function getAdjacentTab(tabGroup: TabGroup, toTheLeft: boolean)
