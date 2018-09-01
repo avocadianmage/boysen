@@ -18,7 +18,7 @@ function main() {
 
     // Update tab title based on the current working directory of the terminal.
     ipcRenderer.on('terminal-title-changed', (event: Event, title: string) => {
-        tabGroup.getActiveTab()!.setTitle(truncateTitle(title));
+        tabGroup.getActiveTab()!.setTitle(title);
     });
 
     // Close the tab if the terminal has exited.
@@ -117,15 +117,6 @@ function getAdjacentTab(tabGroup: TabGroup, toTheLeft: boolean)
     if (!nextTab) nextTab = tabGroup.getTabByPosition(toTheLeft ? tabCount : 1);
 
     return nextTab;
-}
-
-// Right-truncate title text if it exceeds a max limit.
-function truncateTitle(title: string) {
-    const maxLength = 32;
-    if (title.length > maxLength) {
-        title = "…" + title.substring(title.length - maxLength + 1);
-    }
-    return title;
 }
 
 function setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
