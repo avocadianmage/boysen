@@ -1,5 +1,6 @@
 .etabs-tabs {
     background: #282828;
+    white-space: nowrap;
 }
 
 .etabs-tab.visible {
