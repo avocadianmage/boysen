@@ -6,8 +6,12 @@
     "scripts": {
         "start": ".\\npm_start.bat"
     },
-    "repository": "https://github.com/avocadianmage/boysen",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/avocadianmage/file-icon-info"
+    },
     "author": "avocadianmage",
+    "license": "GPL-3.0",
     "devDependencies": {
         "electron": "^2.0.8",
         "electron-rebuild": "^1.8.2"
