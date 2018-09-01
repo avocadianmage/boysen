@@ -8,7 +8,6 @@ import { exec } from 'child_process';
 main();
 
 function main() {
-
     // Create tab group with drag and drop support.
     const tabGroup = new TabGroup({
         ready: (tabGroup) => {
@@ -24,21 +23,33 @@ function main() {
     // Close the tab if the terminal has exited.
     ipcRenderer.on('terminal-exited', () => tabGroup.getActiveTab()!.close());
 
-    // Bind keyboard events for tab manipulation.
+    hookFocusEvents(tabGroup);
     hookCustomKeyEvents(tabGroup);
-
-    // Ensure the terminal in the active tab ends up with focus if the window is 
-    // re-focused. We blur first in case the web view is already getting focused
-    // (i.e. user clicks in the terminal area).
-    remote.getCurrentWindow().on('focus', () => {
-        tabGroup.getActiveTab()!.webview.blur();
-        tabGroup.getActiveTab()!.webview.focus();
-    });
 
     // Create tab for initial terminal instance.
     window.onload = () => newTab(tabGroup);
 }
 
+// Ensure the terminal in the active tab ends up with focus. We blur first in 
+// case the web view is already getting focused (i.e. user clicks in the 
+// terminal area).
+function focusTerminal(tabGroup: TabGroup) {
+    const activeTab = tabGroup.getActiveTab()!;
+    activeTab.webview.blur();
+    activeTab.webview.focus();
+}
+
+function hookFocusEvents(tabGroup: TabGroup) {
+    // Focus terminal of active tab when window receives focus.
+    remote.getCurrentWindow().on('focus', () => focusTerminal(tabGroup));
+
+    // Refocus terminal of active tab if user clicks on the tab container.
+    tabGroup.tabContainer.addEventListener('mouseup', () => {
+        focusTerminal(tabGroup);
+    });
+}
+
+// Bind keyboard events for tab manipulation.
 function hookCustomKeyEvents(tabGroup: TabGroup)
 {
     window.addEventListener('keydown', (ev) => {
@@ -88,8 +99,7 @@ function newTab(tabGroup: TabGroup)
     // goes through its focus event after mousedown.
     const htmlTabs = tabGroup.tabContainer.children;
     htmlTabs[htmlTabs.length - 1].addEventListener('mouseup', () => {
-        tab.webview.blur();
-        tab.webview.focus();
+        focusTerminal(tabGroup);
     });
 }
 
