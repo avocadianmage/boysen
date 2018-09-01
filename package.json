@@ -20,7 +20,7 @@
         "@types/dragula": "^2.1.33",
         "dragula": "^3.7.2",
         "electron-tabs": "^0.9.4",
-        "file-icon-info": "^1.0.13",
+        "file-icon-info": "^1.0.14",
         "node-pty": "^0.7.6",
         "xterm": "^3.6.0"
     }
