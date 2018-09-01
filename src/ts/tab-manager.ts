@@ -12,7 +12,9 @@ function main() {
     // Create tab group with drag and drop support.
     const tabGroup = new TabGroup({
         ready: (tabGroup) => {
-            dragula([ tabGroup.tabContainer ], { direction: "horizontal" });
+            hookFocusEvents(tabGroup);
+            hookDragging(tabGroup);
+            hookCustomKeyEvents(tabGroup);
         }
     });
 
@@ -24,11 +26,15 @@ function main() {
     // Close the tab if the terminal has exited.
     ipcRenderer.on('terminal-exited', () => tabGroup.getActiveTab()!.close());
 
-    hookFocusEvents(tabGroup);
-    hookCustomKeyEvents(tabGroup);
-
     // Create tab for initial terminal instance.
     window.onload = () => newTab(tabGroup);
+}
+
+function hookDragging(tabGroup: TabGroup) {
+    const drake = dragula([ tabGroup.tabContainer ], { 
+        direction: "horizontal" 
+    });
+    drake.on('dragend', () => focusTerminal(tabGroup));
 }
 
 // Ensure the terminal in the active tab ends up with focus. We blur first in 
@@ -93,15 +99,14 @@ function newTab(tabGroup: TabGroup)
         remote.getCurrentWindow().close();
     });
 
-    // Ensure the webview contents of the active tab are properly focused
-    // when the tab is clicked or dragged. Note that we can't simply hook into 
-    // the 'active' event of the tab due to it firing during mousedown. If we 
-    // try to focus the webview at that point, the tab will end up stealing 
-    // focus since it goes through its focus event after mousedown.
+    // Ensure the webview contents of the active tab are properly focused when 
+    // the tab is clicked. Note that we can't simply hook into the 'active' 
+    // event of the tab due to it firing during mousedown. If we try to focus 
+    // the webview at that point, the tab will end up stealing focus since it 
+    // goes through its focus event after mousedown.
     const htmlTabCollection = tabGroup.tabContainer.children;
     const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
     htmlTab.addEventListener('mouseup', () => focusTerminal(tabGroup));
-    htmlTab.addEventListener('dragend', () => focusTerminal(tabGroup));
 }
 
 function getAdjacentTab(tabGroup: TabGroup, toTheLeft: boolean)
