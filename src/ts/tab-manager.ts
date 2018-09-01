@@ -4,6 +4,7 @@ import { ipcRenderer, remote } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
+import * as fii from 'file-icon-info';
 
 main();
 
@@ -134,26 +135,20 @@ function setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
         = `${appDataPath}/${appName}/Cache/shell-icons/${exeName}.ico`;
 
     // If icon file is already cached, use it.
-    if (fs.existsSync(iconPath)) 
-    {
-        tab.setIcon(iconPath);
-        return;
-    }
-
-    // When an icon has been extracted, save it to file and then use it.
-    const fii = require('file-icon-info');
-    fii.emitter.on('icon-info', (data: string) => {
-        createNeededDirectories(iconPath);
-        fs.writeFile(iconPath, data, 'base64', err => {
-            if (err) console.log(err);
-            else tab.setIcon(iconPath);
-        });
-    });
+    if (fs.existsSync(iconPath)) tab.setIcon(iconPath);
 
     // Find the full file path of the shell executable and extract its icon.
-    exec('where ' + exeName, (err, stdout, stderr) => {
+    else exec('where ' + exeName, (err, stdout, stderr) => {
         if (err) console.log(stderr);
-        else fii.getIcon(stdout.trim());
+        else fii.getIcon(stdout.trim(), data => {
+            console.log(data.toString());
+            // When an icon has been extracted, save it to file and then use it.
+            createNeededDirectories(iconPath);
+            fs.writeFile(iconPath, data, 'base64', err => {
+                if (err) console.log(err);
+                else tab.setIcon(iconPath);
+            });
+        });
     });
 }
 
