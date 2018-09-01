@@ -16,7 +16,7 @@
         "@types/dragula": "^2.1.33",
         "dragula": "^3.7.2",
         "electron-tabs": "^0.9.4",
-        "icon-extractor": "^1.0.3",
+        "file-icon-info": "^1.0.4",
         "node-pty": "^0.7.6",
         "xterm": "^3.6.0"
     }

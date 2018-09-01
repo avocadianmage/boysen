@@ -141,10 +141,10 @@ function setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
     }
 
     // When an icon has been extracted, save it to file and then use it.
-    const iconExtractor = require('icon-extractor');
-    iconExtractor.emitter.on('icon', (data: any) => {
+    const fii = require('file-icon-info');
+    fii.emitter.on('icon-info', (data: string) => {
         createNeededDirectories(iconPath);
-        fs.writeFile(iconPath, data.Base64ImageData, 'base64', err => {
+        fs.writeFile(iconPath, data, 'base64', err => {
             if (err) console.log(err);
             else tab.setIcon(iconPath);
         });
@@ -153,7 +153,7 @@ function setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
     // Find the full file path of the shell executable and extract its icon.
     exec('where ' + exeName, (err, stdout, stderr) => {
         if (err) console.log(stderr);
-        else iconExtractor.getIcon(null, stdout.trim());
+        else fii.getIcon(stdout.trim());
     });
 }
 
