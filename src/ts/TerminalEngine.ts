@@ -1,7 +1,6 @@
 import * as pty from 'node-pty';
 import {Terminal } from 'xterm';
 import { fit } from 'xterm/lib/addons/fit/fit';
-import { remote } from 'electron';
 
 class TerminalEngine {
     private readonly _ptyFork = this.createPtyFork();
@@ -18,19 +17,13 @@ class TerminalEngine {
         this.openCommunication();
 
         // Broadcast that the console title has changed.
-        this._xterm.on('title', title => {
-            remote.getCurrentWindow().webContents.send(
-                'terminal-title-changed', title
-            );
-        });
+        this._xterm.on('title', title => document.title = title!);
 
         // Broadcast that node-pty exited.
-        this._ptyFork.on('exit', () => {
-            remote.getCurrentWindow().webContents.send('terminal-exited');
-        });
+        this._ptyFork.on('exit', () => window.close());
 
         // Terminal now is ready for input, so focus it.
-        this._xterm.textarea.focus(); //ckgtest, remove textarea call
+        this._xterm.focus();
     }
 
     private createPtyFork()

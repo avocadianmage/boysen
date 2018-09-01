@@ -1,6 +1,6 @@
 import * as TabGroup from 'electron-tabs';
 import * as dragula from 'dragula';
-import { ipcRenderer, remote } from 'electron';
+import { remote } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import { exec } from 'child_process';
@@ -17,21 +17,6 @@ class TabManager {
             window.onload = () => this.newTab(tabGroup);
         }
     });
-
-    constructor() {
-        // Update tab title based on the current working directory of the 
-        // terminal.
-        ipcRenderer.on(
-            'terminal-title-changed', (_: Event, title: string) => {
-                this._tabGroup.getActiveTab()!.setTitle(title);
-            }
-        );
-
-        // Close the tab if the terminal has exited.
-        ipcRenderer.on('terminal-exited', () => {
-            this._tabGroup.getActiveTab()!.close();
-        });
-    }
 
     // Ensure the terminal in the active tab ends up with focus. We blur first 
     // in case the web view is already getting focused (i.e. user clicks in the 
@@ -100,6 +85,17 @@ class TabManager {
         tab.on('close', () => {
             if (tabGroup.getTabs().length > 0) return;
             remote.getCurrentWindow().close();
+        });
+        
+        // Update tab title based on the current working directory of the 
+        // terminal.
+        tab.webview.addEventListener('page-title-updated', ev => {
+            tab.setTitle(ev.title);
+        });
+
+        // Close the tab if the terminal has exited.
+        tab.webview.addEventListener('close', () => {
+            this._tabGroup.getActiveTab()!.close();
         });
 
         // Ensure the webview contents of the active tab are properly focused when 
