@@ -2,7 +2,7 @@ import * as pty from 'node-pty';
 import { Terminal } from 'xterm';
 import { fit } from 'xterm/lib/addons/fit/fit';
 
-class TerminalEngine {
+export class TerminalEngine {
     private readonly _ptyFork = this.createPtyFork();
     private readonly _xterm = this.createTerminal();
 
@@ -111,5 +111,3 @@ class TerminalEngine {
         this._ptyFork.on('data', data => this._xterm.write(data));
     }
 }
-
-new TerminalEngine();

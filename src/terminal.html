@@ -10,7 +10,8 @@
 <body>
     <div id="terminal-container"></div>
     <script>
-        require('../ts-build/TerminalEngine.js');
+        const terminalEngine = require('../ts-build/TerminalEngine.js');
+        new terminalEngine.TerminalEngine();
     </script>
 </body>
 

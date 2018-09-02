@@ -1,6 +1,5 @@
 .etabs-tabs {
     background: #282828;
-    white-space: nowrap;
 }
 
 .etabs-tab.visible {
@@ -12,6 +11,7 @@
     background: #404040;
     border-right: 1px solid #303030;
     color: #ffffff;   
+    width: 150px;
 }
 
 .etabs-tab.visible.active {
@@ -37,7 +37,8 @@
     unicode-bidi: plaintext;
     vertical-align: text-bottom;
     text-align: left;
-    width: 140px;
+    /* 16px for the icon, 4px for the space between the icon and text. */
+    width: calc(100% - 16px - 4px);
 }
 
 .etabs-views {

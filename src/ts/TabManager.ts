@@ -6,7 +6,7 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import * as fii from 'file-icon-info';
 
-class TabManager {
+export class TabManager {
     private readonly _tabGroup = new TabGroup({
         ready: (tabGroup) => {
             this.hookFocusEvents(tabGroup);
@@ -161,5 +161,3 @@ class TabManager {
         fs.mkdirSync(dirname);
     }
 }
-
-new TabManager();
