@@ -1,5 +1,5 @@
 import * as pty from 'node-pty';
-import {Terminal } from 'xterm';
+import { Terminal } from 'xterm';
 import { fit } from 'xterm/lib/addons/fit/fit';
 
 class TerminalEngine {

@@ -79,6 +79,10 @@ class TabManager {
             }
         });
 
+        // Retrieve HTML element for the tab.
+        const htmlTabCollection = tabGroup.tabContainer.children;
+        const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
+
         this.setTabIconFromShell(tab, "powershell");
         
         // When tab if closed, if it was the last one, close the window.
@@ -91,6 +95,7 @@ class TabManager {
         // terminal.
         tab.webview.addEventListener('page-title-updated', ev => {
             tab.setTitle(ev.title);
+            htmlTab.setAttribute('title', ev.title);
         });
 
         // Close the tab if the terminal has exited.
@@ -103,8 +108,6 @@ class TabManager {
         // event of the tab due to it firing during mousedown. If we try to focus 
         // the webview at that point, the tab will end up stealing focus since it 
         // goes through its focus event after mousedown.
-        const htmlTabCollection = tabGroup.tabContainer.children;
-        const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
         htmlTab.addEventListener('mouseup', () => this.focusTerminal());
     }
 
