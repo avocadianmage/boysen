@@ -7,16 +7,17 @@ import { exec } from 'child_process';
 import * as fii from 'file-icon-info';
 
 export class TabManager {
-    private readonly _tabGroup = new TabGroup({
-        ready: (tabGroup) => {
-            this.hookFocusEvents(tabGroup);
-            this.hookDragging(tabGroup);
-            this.hookCustomKeyEvents(tabGroup);
+    private readonly _tabGroup = new TabGroup();
 
-            // Create tab for initial terminal instance.
-            window.onload = () => this.newTab(tabGroup);
-        }
-    });
+    constructor() {
+        this.hookFocusEvents();
+        this.hookDragging();
+        this.hookCustomKeyEvents();
+        this.hookTabAddRemoveEvents();
+
+        // Create tab for initial terminal instance.
+        window.onload = () => this.newTab();
+    }
 
     // Ensure the terminal in the active tab ends up with focus. We blur first 
     // in case the web view is already getting focused (i.e. user clicks in the 
@@ -27,36 +28,36 @@ export class TabManager {
         webview.focus();
     }
     
-    private hookDragging(tabGroup: TabGroup) {
-        const drake = dragula([ tabGroup.tabContainer ], { 
+    private hookDragging() {
+        const drake = dragula([ this._tabGroup.tabContainer ], { 
             direction: "horizontal" 
         });
         drake.on('dragend', () => this.focusTerminal());
     }
 
-    private hookFocusEvents(tabGroup: TabGroup) {
+    private hookFocusEvents() {
         // Focus terminal of active tab when window receives focus.
         remote.getCurrentWindow().on('focus', () => this.focusTerminal());
     
         // Refocus terminal of active tab if user clicks on the tab container.
-        tabGroup.tabContainer.addEventListener('mouseup', () => {
+        this._tabGroup.tabContainer.addEventListener('mouseup', () => {
             this.focusTerminal();
         });
     }
     
     // Bind keyboard events for tab manipulation.
-    private hookCustomKeyEvents(tabGroup: TabGroup)
+    private hookCustomKeyEvents()
     {
         window.addEventListener('keydown', (ev) => {
     
             // Ctrl+T: add new tab.
-            if (ev.ctrlKey && ev.key === 't') this.newTab(tabGroup);
+            if (ev.ctrlKey && ev.key === 't') this.newTab();
     
             // Ctrl+W: close active tab.
             else if (ev.ctrlKey && ev.key === 'w') {
                 // Stop default which closes the entire browser.
                 ev.preventDefault(); 
-                tabGroup.getActiveTab()!.close();
+                this._tabGroup.getActiveTab()!.close();
             }
     
             // Ctrl+Tab, Ctrl+Shift+Tab: cycle through tabs.
@@ -68,9 +69,25 @@ export class TabManager {
         });
     }
 
-    private newTab(tabGroup: TabGroup)
+    // Resize the widths of all tabs.
+    private resizeTabs() {
+        const htmlTabCollection = this._tabGroup.tabContainer.children;
+        const tabCount = htmlTabCollection.length;
+        const tabWidth = this._tabGroup.tabContainer.clientWidth / tabCount;
+        const tabWidthCSS = `${tabWidth}px`;
+        for (var i = 0; i < tabCount; i++) {
+            (htmlTabCollection[i] as HTMLElement).style.width = tabWidthCSS;
+        }
+    }
+
+    private hookTabAddRemoveEvents() {
+        this._tabGroup.on('tab-added', () => this.resizeTabs());
+        this._tabGroup.on('tab-removed', () => this.resizeTabs());
+    }
+
+    private newTab()
     {
-        const tab = tabGroup.addTab({ 
+        const tab = this._tabGroup.addTab({ 
             title: 'Initializing…',
             src: 'terminal.html',
             active: true,
@@ -80,14 +97,14 @@ export class TabManager {
         });
 
         // Retrieve HTML element for the tab.
-        const htmlTabCollection = tabGroup.tabContainer.children;
+        const htmlTabCollection = this._tabGroup.tabContainer.children;
         const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
 
         this.setTabIconFromShell(tab, "powershell");
         
         // When tab if closed, if it was the last one, close the window.
         tab.on('close', () => {
-            if (tabGroup.getTabs().length > 0) return;
+            if (this._tabGroup.getTabs().length > 0) return;
             remote.getCurrentWindow().close();
         });
         
@@ -103,11 +120,11 @@ export class TabManager {
             this._tabGroup.getActiveTab()!.close();
         });
 
-        // Ensure the webview contents of the active tab are properly focused when 
-        // the tab is clicked. Note that we can't simply hook into the 'active' 
-        // event of the tab due to it firing during mousedown. If we try to focus 
-        // the webview at that point, the tab will end up stealing focus since it 
-        // goes through its focus event after mousedown.
+        // Ensure the webview contents of the active tab are properly focused
+        // when the tab is clicked. Note that we can't simply hook into the
+        // 'active' event of the tab due to it firing during mousedown. If we
+        // try to focus the webview at that point, the tab will end up stealing
+        // focus since it goes through its focus event after mousedown.
         htmlTab.addEventListener('mouseup', () => this.focusTerminal());
     }
 

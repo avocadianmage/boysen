@@ -1,5 +1,6 @@
 .etabs-tabs {
     background: #282828;
+    white-space: nowrap;
 }
 
 .etabs-tab.visible {
@@ -10,8 +11,11 @@
     padding-right: 8px;
     background: #404040;
     border-right: 1px solid #303030;
-    color: #ffffff;   
-    width: 150px;
+    color: #ffffff;  
+    
+    /* Tab width. */
+    box-sizing: border-box;
+    max-width: 160px;
 }
 
 .etabs-tab.visible.active {
