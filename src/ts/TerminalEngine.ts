@@ -37,8 +37,11 @@ export class TerminalEngine {
 
     // Build commandline arguments to pass in to the PowerShell process.
     private getPowerShellArguments() {
-        const path = "'" + __dirname + "/../src/powershell/startup.ps1'";
-        return '-nologo -noexit -command ". ' + path + '"';
+        const startupCommand 
+            = "Set-ExecutionPolicy Bypass -Scope Process -Force;"
+            + ". '" + __dirname + "/../src/powershell/startup.ps1';"
+            + "Set-ExecutionPolicy Undefined -Scope Process -Force";
+        return '-nologo -noexit -command "' + startupCommand + '"';
     }
 
     private createTerminal()
