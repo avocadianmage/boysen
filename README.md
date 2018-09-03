@@ -29,3 +29,8 @@ To build and run the program, you'll need `npm`, which is packaged with [node.js
 ```
 npm install --global --production windows-build-tools
 ```
+
+You will also need to make sure you have TypeScript for the project to compile:
+```
+npm install -g typescript
+```
