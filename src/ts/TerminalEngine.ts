@@ -82,7 +82,7 @@ export class TerminalEngine {
 
     private hookResize()
     {
-        window.onresize = this.resize;
+        window.onresize = () => this.resize();
         this.resize();
     }
 
