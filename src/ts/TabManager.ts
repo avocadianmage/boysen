@@ -83,6 +83,7 @@ export class TabManager {
     private hookTabAddRemoveEvents() {
         this._tabGroup.on('tab-added', () => this.resizeTabs());
         this._tabGroup.on('tab-removed', () => this.resizeTabs());
+        window.onresize = () => this.resizeTabs();
     }
 
     private newTab()
