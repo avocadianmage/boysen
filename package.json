@@ -4,7 +4,8 @@
     "description": "A sleek PowerShell emulator",
     "main": "ts-build/main.js",
     "scripts": {
-        "start": ".\\npm_start.bat"
+        "start": ".\\npm_start.bat",
+        "package-win": "electron-packager . --icon=assets/terminal.ico --out=release-builds --overwrite --prune"
     },
     "repository": {
         "type": "git",
@@ -14,6 +15,7 @@
     "license": "GPL-3.0",
     "devDependencies": {
         "electron": "^2.0.8",
+        "electron-packager": "^12.1.1",
         "electron-rebuild": "^1.8.2"
     },
     "dependencies": {

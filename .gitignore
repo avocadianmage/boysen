@@ -57,8 +57,11 @@ typings/
 # dotenv environment variables file
 .env
 
-# JavaScript files compiled from TypeScript.
+# JavaScript files compiled from TypeScript
 ts-build
+
+# Packaged builds
+release-builds
 
 # next.js build output
 <<<<<<< HEAD
