@@ -7,7 +7,26 @@ import { exec } from 'child_process';
 import * as fii from 'file-icon-info';
 
 export class TabManager {
-    private readonly _tabGroup = new TabGroup();
+    private readonly _tabGroup = new TabGroup({
+        newTab: { 
+            title: 'Initializing…',
+            src: 'terminal.html',
+            active: true,
+            webviewAttributes: {
+                nodeintegration: true
+            },
+            ready: (tab) => this.hookSingleTabEvents(tab)
+        }
+    });
+
+    private _newTabButtonWidth: number = 0;
+    private get newTabButtonWidth() {
+        if (!this._newTabButtonWidth) {
+            this._newTabButtonWidth 
+                = document.querySelector('.etabs-tab-button-new')!.clientWidth;
+        }
+        return this._newTabButtonWidth;
+    }
 
     constructor() {
         this.hookFocusEvents();
@@ -16,7 +35,40 @@ export class TabManager {
         this.hookTabAddRemoveEvents();
 
         // Create tab for initial terminal instance.
-        window.onload = () => this.newTab();
+        window.onload = () => this._tabGroup.addTab();
+    }
+
+    private hookSingleTabEvents(tab: TabGroup.Tab) {
+        this.setTabIconFromShell(tab, "powershell");
+        
+        // Retrieve HTML element for the tab.
+        const htmlTabCollection = this._tabGroup.tabContainer.children;
+        const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
+        
+        // When tab if closed, if it was the last one, close the window.
+        tab.on('close', () => {
+            if (this._tabGroup.getTabs().length > 0) return;
+            remote.getCurrentWindow().close();
+        });
+        
+        // Update tab title based on the current working directory of the 
+        // terminal.
+        tab.webview.addEventListener('page-title-updated', ev => {
+            tab.setTitle(ev.title);
+            htmlTab.setAttribute('title', ev.title);
+        });
+
+        // Close the tab if the terminal has exited.
+        tab.webview.addEventListener('close', () => {
+            this._tabGroup.getActiveTab()!.close();
+        });
+
+        // Ensure the webview contents of the active tab are properly focused
+        // when the tab is clicked. Note that we can't simply hook into the
+        // 'active' event of the tab due to it firing during mousedown. If we
+        // try to focus the webview at that point, the tab will end up stealing
+        // focus since it goes through its focus event after mousedown.
+        htmlTab.addEventListener('mouseup', () => this.focusTerminal());
     }
 
     // Ensure the terminal in the active tab ends up with focus. We blur first 
@@ -51,7 +103,7 @@ export class TabManager {
         window.addEventListener('keydown', (ev) => {
     
             // Ctrl+T: add new tab.
-            if (ev.ctrlKey && ev.key === 't') this.newTab();
+            if (ev.ctrlKey && ev.key === 't') this._tabGroup.addTab();
     
             // Ctrl+W: close active tab.
             else if (ev.ctrlKey && ev.key === 'w') {
@@ -73,7 +125,8 @@ export class TabManager {
     private resizeTabs() {
         const htmlTabCollection = this._tabGroup.tabContainer.children;
         const tabCount = htmlTabCollection.length;
-        const tabWidth = this._tabGroup.tabContainer.clientWidth / tabCount;
+        const tabWidth = (window.innerWidth - this.newTabButtonWidth) 
+            / tabCount;
         const tabWidthCSS = `${tabWidth}px`;
         for (var i = 0; i < tabCount; i++) {
             (htmlTabCollection[i] as HTMLElement).style.width = tabWidthCSS;
@@ -84,49 +137,6 @@ export class TabManager {
         this._tabGroup.on('tab-added', () => this.resizeTabs());
         this._tabGroup.on('tab-removed', () => this.resizeTabs());
         window.onresize = () => this.resizeTabs();
-    }
-
-    private newTab()
-    {
-        const tab = this._tabGroup.addTab({ 
-            title: 'Initializing…',
-            src: 'terminal.html',
-            active: true,
-            webviewAttributes: {
-                nodeintegration: true
-            }
-        });
-
-        // Retrieve HTML element for the tab.
-        const htmlTabCollection = this._tabGroup.tabContainer.children;
-        const htmlTab = htmlTabCollection[htmlTabCollection.length - 1];
-
-        this.setTabIconFromShell(tab, "powershell");
-        
-        // When tab if closed, if it was the last one, close the window.
-        tab.on('close', () => {
-            if (this._tabGroup.getTabs().length > 0) return;
-            remote.getCurrentWindow().close();
-        });
-        
-        // Update tab title based on the current working directory of the 
-        // terminal.
-        tab.webview.addEventListener('page-title-updated', ev => {
-            tab.setTitle(ev.title);
-            htmlTab.setAttribute('title', ev.title);
-        });
-
-        // Close the tab if the terminal has exited.
-        tab.webview.addEventListener('close', () => {
-            this._tabGroup.getActiveTab()!.close();
-        });
-
-        // Ensure the webview contents of the active tab are properly focused
-        // when the tab is clicked. Note that we can't simply hook into the
-        // 'active' event of the tab due to it firing during mousedown. If we
-        // try to focus the webview at that point, the tab will end up stealing
-        // focus since it goes through its focus event after mousedown.
-        htmlTab.addEventListener('mouseup', () => this.focusTerminal());
     }
 
     private getAdjacentTab(toTheLeft: boolean)

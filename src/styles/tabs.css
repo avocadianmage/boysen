@@ -1,6 +1,10 @@
-.etabs-tabs {
+.etabs-tabgroup {
     background: #282828;
+}
+
+.etabs-tabs {
     white-space: nowrap;
+    display: inline-block;
 }
 
 .etabs-tab.visible {
@@ -11,7 +15,8 @@
     padding-right: 8px;
     background: #404040;
     border-right: 1px solid #303030;
-    color: #ffffff;  
+    color: #ffffff;
+    height: 24px;
     
     /* Tab width. */
     box-sizing: border-box;
@@ -48,7 +53,7 @@
 .etabs-views {
     position: absolute;
     width: 100%;
-    top: 25px;
+    top: 24px;
     bottom: 0;
 }
 
@@ -57,4 +62,26 @@
     height: 16px;
     vertical-align: middle;
     margin-right: 4px;
+}
+
+/* New tab button. */
+.etabs-buttons {
+    display: inline-block;
+    margin-left: -4px;
+}
+
+.etabs-tab-button-new {
+    padding: 0;
+    border: none;
+    color: transparent;
+    background: transparent;
+    width: 24px;
+    height: 24px;
+    background-image: url(../../assets/new-tab.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.etabs-tab-button-new:hover {
+    background-color: #404040;
 }
