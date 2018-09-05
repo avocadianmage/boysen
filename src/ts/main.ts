@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow : BrowserWindow | null;
 
 function createWindow() {
 
@@ -11,10 +11,15 @@ function createWindow() {
         width: 700, height: 500,
         minWidth: 400, minHeight: 100,
         autoHideMenuBar: true,
-        icon: 'assets/terminal.ico'
+        icon: 'assets/terminal.ico',
+        backgroundColor: '#1e1e1e',
+        show: false
     });
 
-    // and load the index.html of the app.
+    // Reduce flickering on startup by only showing the window when it's ready.
+    mainWindow.once('ready-to-show', () => mainWindow!.show());
+
+    // Load the index.html of the app.
     mainWindow.loadFile('src/index.html');
     
     // Dereference the window object, usually you would store windows in an

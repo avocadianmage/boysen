@@ -80,8 +80,10 @@
     background-image: url(../../assets/new-tab.png);
     background-repeat: no-repeat;
     background-position: center;
+    transition: background-color 0.25s;
 }
 
 .etabs-tab-button-new:hover {
     background-color: #404040;
+    transition: background-color 0.25s;
 }
