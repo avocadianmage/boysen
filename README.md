@@ -13,7 +13,8 @@ git clone https://github.com/avocadianmage/boysen.git
 Within the root directory of the repo (`/boysen`):
 ```powershell
 npm install
-npm run pack # Ensure native electron modules are built.
+tsc             # Compile TypeScript.
+npm run pack    # Ensure native electron modules are built.
 ```
 
 To run the program:

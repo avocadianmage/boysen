@@ -4,7 +4,7 @@
     "description": "A modern and lightweight PowerShell emulator",
     "main": "src/ts-build/main.js",
     "scripts": {
-        "start": ".\\npm_start.bat",
+        "start": "electron . --ignore-gpu-blacklist",
         "pack": "electron-builder --dir",
         "dist": "electron-builder"
     },

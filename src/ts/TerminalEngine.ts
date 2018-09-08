@@ -95,7 +95,7 @@ export class TerminalEngine {
             if (ev.ctrlKey && ev.key === 'v') return false;
             if (ev.ctrlKey && ev.key === 't') return false;
             if (ev.ctrlKey && ev.key === 'w') return false;
-        
+            
             return true;
         });
     }

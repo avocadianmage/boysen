@@ -1,3 +1,6 @@
+# Don't add duplicate entries to history.
+Set-PSReadlineOption -HistoryNoDuplicates
+
 # Import formatting file.
 Update-FormatData -PrependPath $PSScriptRoot/boysen.format.ps1xml
 
