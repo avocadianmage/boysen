@@ -33,6 +33,10 @@
             "target": "nsis",
             "icon": "assets/terminal.ico"
         },
+        "nsis": {
+            "include": "build/installer.nsh",
+            "warningsAsErrors": false
+        },
         "extraFiles": [
             "powershell/**/*"
         ]

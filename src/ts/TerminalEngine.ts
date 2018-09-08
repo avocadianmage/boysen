@@ -36,11 +36,19 @@ export class TerminalEngine {
         });
     }
 
+    // Get the saved environment variable referencing the installation path of
+    // this application. If it doesn't exist, return the current working 
+    // directory.
+    private getInstallPath = () => process.env.boysen || process.cwd();
+
     // Build commandline arguments to pass in to the PowerShell process.
     private getPowerShellArguments() {
+        const startupScriptPath = path.join(
+            this.getInstallPath(), "powershell/startup-main.ps1"
+        );
         const startupCommand 
             = "Set-ExecutionPolicy Bypass -Scope Process -Force;"
-            + `. '${path.join(process.cwd(), "powershell/startup-main.ps1")}';`
+            + `. '${startupScriptPath}';`
             + "Set-ExecutionPolicy Undefined -Scope Process -Force";
         return '-nologo -noexit -command "' + startupCommand + '"';
     }
