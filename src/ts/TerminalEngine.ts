@@ -39,7 +39,9 @@ export class TerminalEngine {
     // Get the saved environment variable referencing the installation path of
     // this application. If it doesn't exist, return the current working 
     // directory.
-    private getInstallPath = () => process.env.boysen || process.cwd();
+    private getInstallPath() {
+        return process.env.boysen || process.cwd();
+    }
 
     // Build commandline arguments to pass in to the PowerShell process.
     private getPowerShellArguments() {
@@ -61,7 +63,7 @@ export class TerminalEngine {
             theme: { 
                 cursor: 'orange', 
                 foreground: 'lightgray', 
-                background: '#1e1e1e' 
+                background: '#1e1e1e'
             }
         });
         terminal.open(this.getTerminalParentElement());

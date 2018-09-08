@@ -3,7 +3,13 @@ Boysen is a modern and lightweight PowerShell emulator built upon electron, xter
 
 ![Boysen application screenshot with three tabs open](screenshot.png)
 
-## Building and running
+## Download and install
+
+You can download the latest installer from the [Releases](https://github.com/avocadianmage/boysen/releases) page.
+
+Note that the executable isn't signed (sorry!)
+
+## How to build
 
 Clone the repo:
 ```
