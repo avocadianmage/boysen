@@ -13,7 +13,7 @@ git clone https://github.com/avocadianmage/boysen.git
 Within the root directory of the repo (`/boysen`):
 ```powershell
 npm install
-./node_modules/.bin/electron-rebuild # Build native electron modules.
+npm run pack # Ensure native electron modules are built.
 ```
 
 To run the program:

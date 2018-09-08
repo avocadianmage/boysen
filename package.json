@@ -16,11 +16,11 @@
     "license": "GPL-3.0",
     "devDependencies": {
         "electron": "^2.0.8",
-        "electron-builder": "^20.28.4",
-        "electron-rebuild": "^1.8.2"
+        "electron-builder": "^20.28.4"
     },
     "dependencies": {
         "@types/dragula": "^2.1.33",
+        "ajv": "^6.0.0",
         "dragula": "^3.7.2",
         "electron-tabs": "^0.9.4",
         "file-icon-info": "^1.0.14",
@@ -33,6 +33,8 @@
             "target": "nsis",
             "icon": "assets/terminal.ico"
         },
-        "extraFiles": [ "powershell/**/*" ]
+        "extraFiles": [
+            "powershell/**/*"
+        ]
     }
 }
