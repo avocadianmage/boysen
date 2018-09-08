@@ -63,7 +63,13 @@ export class TerminalEngine {
             theme: { 
                 cursor: 'orange', 
                 foreground: 'lightgray', 
-                background: '#1e1e1e'
+                background: '#1e1e1e',
+                yellow: "orange",
+                green: '#23d18b',
+                blue: '#3b8eea',
+                red: '#d69d85',
+                cyan: '#11a8cd',
+                brightBlack: '#666666',
             }
         });
         terminal.open(this.getTerminalParentElement());
