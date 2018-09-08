@@ -1,6 +1,7 @@
 import * as pty from 'node-pty';
 import { Terminal } from 'xterm';
 import { fit } from 'xterm/lib/addons/fit/fit';
+import * as path from 'path';
 
 export class TerminalEngine {
     private readonly _ptyFork = this.createPtyFork();
@@ -39,7 +40,7 @@ export class TerminalEngine {
     private getPowerShellArguments() {
         const startupCommand 
             = "Set-ExecutionPolicy Bypass -Scope Process -Force;"
-            + ". '" + __dirname + "/../src/powershell/startup.ps1';"
+            + `. '${path.join(process.cwd(), "powershell/startup-main.ps1")}';`
             + "Set-ExecutionPolicy Undefined -Scope Process -Force";
         return '-nologo -noexit -command "' + startupCommand + '"';
     }

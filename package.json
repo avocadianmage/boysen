@@ -1,11 +1,12 @@
 {
     "name": "boysen",
     "version": "1.0.0",
-    "description": "A sleek PowerShell emulator",
+    "description": "A modern and lightweight PowerShell emulator",
     "main": "ts-build/main.js",
     "scripts": {
         "start": ".\\npm_start.bat",
-        "package-win": "electron-packager . --icon=assets/terminal.ico --out=release-builds --overwrite --prune"
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder"
     },
     "repository": {
         "type": "git",
@@ -15,7 +16,7 @@
     "license": "GPL-3.0",
     "devDependencies": {
         "electron": "^2.0.8",
-        "electron-packager": "^12.1.1",
+        "electron-builder": "^20.28.4",
         "electron-rebuild": "^1.8.2"
     },
     "dependencies": {
@@ -25,5 +26,13 @@
         "file-icon-info": "^1.0.14",
         "node-pty": "^0.7.6",
         "xterm": "^3.6.0"
+    },
+    "build": {
+        "appId": "com.electron.boysen",
+        "win": {
+            "target": "nsis",
+            "icon": "assets/terminal.ico"
+        },
+        "extraFiles": [ "powershell/**/*" ]
     }
 }

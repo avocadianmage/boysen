@@ -61,7 +61,7 @@ typings/
 ts-build
 
 # Packaged builds
-release-builds
+dist
 
 # next.js build output
 <<<<<<< HEAD
