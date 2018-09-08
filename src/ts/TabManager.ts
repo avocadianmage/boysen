@@ -158,7 +158,7 @@ export class TabManager {
 
     private setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
         const appDataPath = process.env.APPDATA;
-        const appName = require(__dirname + '/../package.json').name;
+        const appName = path.basename(process.argv[1]);
         const iconPath 
             = `${appDataPath}/${appName}/Cache/shell-icons/${exeName}.ico`;
 

@@ -58,7 +58,7 @@ typings/
 .env
 
 # JavaScript files compiled from TypeScript
-ts-build
+src/ts-build
 
 # Packaged builds
 dist
