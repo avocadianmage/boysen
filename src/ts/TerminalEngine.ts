@@ -27,8 +27,7 @@ export class TerminalEngine {
         this._xterm.focus();
     }
 
-    private createPtyFork()
-    {
+    private createPtyFork() {
         return pty.spawn('powershell.exe', this.getPowerShellArguments(), {
             name: 'xterm-color',
             cwd: process.cwd(),
@@ -55,8 +54,7 @@ export class TerminalEngine {
         return '-nologo -noprofile -noexit -command "' + startupCommand + '"';
     }
 
-    private createTerminal()
-    {
+    private createTerminal() {
         const terminal = new Terminal({
             fontFamily: 'Consolas',
             fontSize: 10,
@@ -80,8 +78,7 @@ export class TerminalEngine {
         return document.getElementById('terminal-container')!;
     }
 
-    private hookCustomKeyEvents()
-    {
+    private hookCustomKeyEvents() {
         this._xterm.attachCustomKeyEventHandler(ev => {
 
             // If text is selcted, allow Ctrl+C for copy. Otherwise, it is used
@@ -100,8 +97,7 @@ export class TerminalEngine {
         });
     }
 
-    private hookResize()
-    {
+    private hookResize() {
         window.onresize = () => this.resize();
         this.resize();
     }

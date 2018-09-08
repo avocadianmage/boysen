@@ -98,8 +98,7 @@ export class TabManager {
     }
     
     // Bind keyboard events for tab manipulation.
-    private hookCustomKeyEvents()
-    {
+    private hookCustomKeyEvents() {
         window.addEventListener('keydown', (ev) => {
     
             // Ctrl+T: add new tab.
@@ -139,8 +138,7 @@ export class TabManager {
         window.onresize = () => this.resizeTabs();
     }
 
-    private getAdjacentTab(toTheLeft: boolean)
-    {
+    private getAdjacentTab(toTheLeft: boolean) {
         // Quit if there is only a single tab.
         const tabCount = this._tabGroup.getTabs().length;
         if (tabCount === 1) return null;
