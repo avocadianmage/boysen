@@ -52,7 +52,7 @@ export class TerminalEngine {
             = "Set-ExecutionPolicy Bypass -Scope Process -Force;"
             + `. '${startupScriptPath}';`
             + "Set-ExecutionPolicy Undefined -Scope Process -Force";
-        return '-nologo -noexit -command "' + startupCommand + '"';
+        return '-nologo -noprofile -noexit -command "' + startupCommand + '"';
     }
 
     private createTerminal()
