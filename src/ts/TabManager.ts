@@ -157,14 +157,17 @@ export class TabManager {
     }
 
     private setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
-        const appDataPath = process.env.APPDATA;
-        const appName = path.basename(process.argv[1]);
-        const iconPath 
-            = `${appDataPath}/${appName}/Cache/shell-icons/${exeName}.ico`;
+        const iconPath = path.join(
+            process.env.APPDATA!, 
+            'boysen', 
+            'Cache', 
+            'shell-icons',
+            `${exeName}.ico`
+        );
 
         // If icon file is already cached, use it.
         if (fs.existsSync(iconPath)) tab.setIcon(iconPath);
-
+        
         // Find the full file path of the shell executable and extract its icon.
         else exec('where ' + exeName, (err, stdout, stderr) => {
             if (err) console.log(stderr);

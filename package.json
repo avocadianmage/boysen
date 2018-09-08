@@ -1,6 +1,6 @@
 {
     "name": "boysen",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A modern and lightweight PowerShell emulator",
     "main": "src/ts-build/main.js",
     "scripts": {
@@ -23,7 +23,7 @@
         "ajv": "^6.0.0",
         "dragula": "^3.7.2",
         "electron-tabs": "^0.9.4",
-        "file-icon-info": "^1.0.14",
+        "file-icon-info": "^1.0.15",
         "node-pty": "^0.7.6",
         "xterm": "^3.6.0"
     },
