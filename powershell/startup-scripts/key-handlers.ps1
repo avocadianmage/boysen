@@ -17,21 +17,15 @@ Set-PSReadLineKeyHandler -Key Ctrl+End `
     [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($text.Length) 
 }
 
-# Ctrl+Shift+Home: Select text until start of input.
-Set-PSReadLineKeyHandler -Key Ctrl+Shift+Home `
-                         -BriefDescription SelectBackwardToStart `
-                         -Description "Select text until start of input" `
-                         -ScriptBlock { selectLines $false }
-
-# Ctrl+Shift+End: Select text to the end of the input buffer.
-Set-PSReadLineKeyHandler -Key Ctrl+Shift+End `
-                         -BriefDescription SelectForwardToEnd `
-                         -Description "Select text until end of input" `
-                         -ScriptBlock { selectLines $true }
-
-# Continue selecting the next line until there are no more.
-function selectLines {
-    Param([Parameter(Mandatory=$true)][bool]$forward)
+# Ctrl+Shift+Home/End: Select text until start or end of input.
+Set-PSReadLineKeyHandler -Key Ctrl+Shift+Home,Ctrl+Shift+End `
+                         -BriefDescription SelectToEnd `
+                         -Description "Select text until start or end of input" `
+                         -ScriptBlock {
+    param($key, $arg)
+    
+    # Move to end of input if End key is pressed. Move to start for Home key.
+    $forward = $key.Key -eq [System.ConsoleKey]::End
 
     $selectionLength = $null
     while ($true) {
