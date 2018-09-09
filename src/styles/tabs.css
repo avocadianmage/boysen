@@ -20,7 +20,7 @@
     
     /* Tab width. */
     box-sizing: border-box;
-    max-width: 160px;
+    max-width: 240px;
 }
 
 .etabs-tab.visible.active {
