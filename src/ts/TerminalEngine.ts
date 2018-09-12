@@ -1,6 +1,7 @@
 import * as pty from 'node-pty';
 import { Terminal } from 'xterm';
 import { fit } from 'xterm/lib/addons/fit/fit';
+import * as os from 'os';
 import * as path from 'path';
 
 export class TerminalEngine {
@@ -27,8 +28,15 @@ export class TerminalEngine {
         this._xterm.focus();
     }
 
+    private getTerminalDetailsForOS() {
+        return os.platform() === 'win32'
+            ? { shell: 'powershell.exe', args: this.getPowerShellArguments() }
+            : { shell: 'bash', args: [] };
+    }
+
     private createPtyFork() {
-        return pty.spawn('powershell.exe', this.getPowerShellArguments(), {
+        const terminal = this.getTerminalDetailsForOS(); 
+        return pty.spawn(terminal.shell, terminal.args, {
             name: 'xterm-color',
             cwd: process.cwd(),
             env: process.env as any
@@ -56,7 +64,7 @@ export class TerminalEngine {
 
     private createTerminal() {
         const terminal = new Terminal({
-            fontFamily: 'Consolas',
+            fontFamily: 'Consolas, monospace',
             fontSize: 10,
             theme: { 
                 cursor: 'orange', 

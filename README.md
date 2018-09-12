@@ -24,7 +24,7 @@ npm start
 
 ### Dependencies
 
-To build and run the program, you'll need `npm`, which is packaged with [node.js](https://nodejs.org/).
+To build and run the program, you'll need `node.js` and `npm` (which is packaged with node). You can get it [here](https://nodejs.org/).
 
 `npm install` requires some tools like Python and the C++ compiler to be present on the system. You can easily install them by running the following command in PowerShell as an administrator:
 ```

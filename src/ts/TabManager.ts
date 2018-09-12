@@ -1,10 +1,6 @@
 import * as TabGroup from 'electron-tabs';
 import * as dragula from 'dragula';
 import { remote } from 'electron';
-import * as fs from 'fs';
-import * as path from 'path';
-import { exec } from 'child_process';
-import * as fii from 'file-icon-info';
 
 export class TabManager {
     private readonly _tabGroup = new TabGroup({
@@ -39,7 +35,6 @@ export class TabManager {
     }
 
     private hookSingleTabEvents(tab: TabGroup.Tab) {
-        this.setTabIconFromShell(tab, "powershell");
         
         // Retrieve HTML element for the tab.
         const htmlTabCollection = this._tabGroup.tabContainer.children;
@@ -152,41 +147,5 @@ export class TabManager {
         }
 
         return nextTab;
-    }
-
-    private setTabIconFromShell(tab: TabGroup.Tab, exeName: string) {
-        const iconPath = path.join(
-            process.env.APPDATA!, 
-            'boysen', 
-            'Cache', 
-            'shell-icons',
-            `${exeName}.ico`
-        );
-
-        // If icon file is already cached, use it.
-        if (fs.existsSync(iconPath)) tab.setIcon(iconPath);
-        
-        // Find the full file path of the shell executable and extract its icon.
-        else exec('where ' + exeName, (err, stdout, stderr) => {
-            if (err) console.log(stderr);
-            else fii.getIcon(stdout.trim(), data => {
-                // When an icon has been extracted, save it to file and then use
-                // it.
-                this.createNeededDirectories(iconPath);
-                fs.writeFile(iconPath, data, 'base64', err => {
-                    if (err) console.log(err);
-                    else tab.setIcon(iconPath);
-                });
-            });
-        });
-    }
-
-    // Create any needed directories to ensure the specified file path can
-    // exist.
-    private createNeededDirectories(filePath: string) {
-        const dirname = path.dirname(filePath);
-        if (fs.existsSync(dirname)) return;
-        this.createNeededDirectories(dirname);
-        fs.mkdirSync(dirname);
     }
 }

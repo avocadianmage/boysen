@@ -34,7 +34,7 @@
 .etabs-tab-title {
     cursor: default;
     user-select: none;
-    font-family: "Consolas";
+    font-family: Consolas, monospace;
     font-size: 10px;
 
     /* Text overflow handling. */
@@ -46,8 +46,7 @@
     unicode-bidi: plaintext;
     vertical-align: text-bottom;
     text-align: left;
-    /* 16px for the icon, 4px for the space between the icon and text. */
-    width: calc(100% - 16px - 4px);
+    width: 100%;
 }
 
 .etabs-views {
