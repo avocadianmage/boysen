@@ -64,7 +64,7 @@ export class TerminalEngine {
 
     private createTerminal() {
         const terminal = new Terminal({
-            fontFamily: 'Consolas, monospace',
+            fontFamily: 'Consolas, "Ubuntu Mono", monospace',
             fontSize: 10,
             theme: { 
                 cursor: 'orange', 

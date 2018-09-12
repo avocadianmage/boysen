@@ -34,8 +34,8 @@
 .etabs-tab-title {
     cursor: default;
     user-select: none;
-    font-family: Consolas, monospace;
-    font-size: 10px;
+    font-family: Consolas, "Ubuntu Mono", monospace;
+    font-size: 11px;
 
     /* Text overflow handling. */
     overflow: hidden;
@@ -44,7 +44,7 @@
     display: inline-block;
     direction: rtl;
     unicode-bidi: plaintext;
-    vertical-align: text-bottom;
+    vertical-align: middle;
     text-align: left;
     width: 100%;
 }
