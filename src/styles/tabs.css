@@ -14,6 +14,7 @@
     padding-left: 8px;
     padding-right: 8px;
     background: #404040;
+    transition: background-color 0.25s;
     border-right: 1px solid #303030;
     color: #ffffff;
     height: 24px;
@@ -25,6 +26,11 @@
 
 .etabs-tab.visible.active {
     background: #1e1e1e;
+}
+
+.etabs-tab.visible:not(.active):hover {
+    background: #4f4f4f;
+    transition: background-color 0.25s;
 }
 
 .etabs-tab-buttons, .etabs-tab-badge {
@@ -45,7 +51,7 @@
     direction: rtl;
     unicode-bidi: plaintext;
     vertical-align: middle;
-    text-align: left;
+    text-align: center;
     width: 100%;
 }
 

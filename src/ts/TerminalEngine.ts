@@ -95,8 +95,10 @@ export class TerminalEngine {
                 return !this._xterm.hasSelection();
             }
         
-            // Shortcuts that should skip the terminal and be handled by the system.
+            // Shortcuts that should skip the terminal and be handled by the 
+            // system.
             if (ev.altKey && ev.key === 'F4' && !ev.ctrlKey) return false;
+            if (ev.ctrlKey && ev.key === 'Tab') return false;
             if (ev.ctrlKey && ev.key === 'v') return false;
             if (ev.ctrlKey && ev.key === 't') return false;
             if (ev.ctrlKey && ev.key === 'w') return false;
