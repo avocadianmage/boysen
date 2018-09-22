@@ -70,7 +70,7 @@ export class TerminalEngine {
                 cursor: 'orange', 
                 foreground: 'lightgray', 
                 background: '#1e1e1e',
-                yellow: "orange",
+                yellow: 'orange',
                 green: '#23d18b',
                 blue: '#3b8eea',
                 red: '#d69d85',
