@@ -10,7 +10,4 @@ Set-PSReadlineOption -TokenKind Variable -ForegroundColor DarkGreen
 Set-PSReadlineOption -TokenKind Keyword -ForegroundColor DarkBlue
 Set-PSReadlineOption -TokenKind Type -ForegroundColor DarkCyan
 Set-PSReadlineOption -TokenKind Member -ForegroundColor Magenta
-Set-PSReadlineOption -TokenKind String -ForegroundColor DarkRed
-Set-PSReadlineOption -TokenKind Number -ForegroundColor Yellow
-Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkYellow
 Set-PSReadlineOption -TokenKind Comment -ForegroundColor DarkGray
