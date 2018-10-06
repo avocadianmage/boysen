@@ -66,6 +66,7 @@ export class TerminalEngine {
         const terminal = new Terminal({
             fontFamily: 'Consolas, "Ubuntu Mono", monospace',
             fontSize: 10,
+            cursorBlink: true,
             theme: { 
                 cursor: 'orange', 
                 foreground: 'lightgray', 
@@ -75,7 +76,7 @@ export class TerminalEngine {
                 blue: '#3b8eea',
                 red: '#d69d85',
                 cyan: '#11a8cd',
-                brightBlack: '#666666',
+                brightBlack: '#666666'
             }
         });
         terminal.open(this.getTerminalParentElement());
