@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <div class="etabs-tabgroup">
+    <div id="electron-titlebar" class="etabs-tabgroup">
         <div class="etabs-tabs"></div>
         <div class="etabs-buttons"></div>
     </div>
     <div class="etabs-views"></div>
 
     <script>
+        require('electron-titlebar');
         const tabManager = require('./ts-build/TabManager');
         new tabManager.TabManager();
     </script>

@@ -1,10 +1,20 @@
-.etabs-tabgroup {
+#electron-titlebar.etabs-tabgroup {
     background: #282828;
+    height: 24px;
+    padding-top: 12px;
+    -webkit-app-region: drag;
+}
+
+#electron-titlebar > .button:not(.button-close),
+#electron-titlebar > .button-close:not(:hover) {
+    filter: invert(100%);
 }
 
 .etabs-tabs {
     white-space: nowrap;
     display: inline-block;
+    -webkit-app-region: no-drag;
+    pointer-events: all;
 }
 
 .etabs-tab.visible {
@@ -30,7 +40,6 @@
 
 .etabs-tab.visible:not(.active):hover {
     background: #4f4f4f;
-    transition: background-color 0.25s;
 }
 
 .etabs-tab-buttons, .etabs-tab-badge {
@@ -58,7 +67,7 @@
 .etabs-views {
     position: absolute;
     width: 100%;
-    top: 24px;
+    top: 36px;
     bottom: 0;
 }
 
@@ -73,6 +82,8 @@
 .etabs-buttons {
     display: inline-block;
     margin-left: -4px;
+    -webkit-app-region: no-drag;
+    pointer-events: all;
 }
 
 .etabs-tab-button-new {
@@ -90,5 +101,4 @@
 
 .etabs-tab-button-new:hover {
     background-color: #404040;
-    transition: background-color 0.25s;
 }

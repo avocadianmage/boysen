@@ -15,13 +15,15 @@ export class TabManager {
         }
     });
 
-    private _newTabButtonWidth: number = 0;
-    private get newTabButtonWidth() {
-        if (!this._newTabButtonWidth) {
-            this._newTabButtonWidth 
-                = document.querySelector('.etabs-tab-button-new')!.clientWidth;
+    private _tabSpaceRightOffset: number = 0;
+    private get tabSpaceRightOffset() {
+        if (!this._tabSpaceRightOffset) {
+            const controlButtonsWidth = 150;
+            this._tabSpaceRightOffset 
+                = document.querySelector('.etabs-tab-button-new')!.clientWidth
+                + controlButtonsWidth;
         }
-        return this._newTabButtonWidth;
+        return this._tabSpaceRightOffset;
     }
 
     constructor() {
@@ -119,7 +121,7 @@ export class TabManager {
     private resizeTabs() {
         const htmlTabCollection = this._tabGroup.tabContainer.children;
         const tabCount = htmlTabCollection.length;
-        const tabWidth = (window.innerWidth - this.newTabButtonWidth) 
+        const tabWidth = (window.innerWidth - this.tabSpaceRightOffset) 
             / tabCount;
         const tabWidthCSS = `${tabWidth}px`;
         for (var i = 0; i < tabCount; i++) {

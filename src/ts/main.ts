@@ -13,6 +13,7 @@ function createWindow() {
         autoHideMenuBar: true,
         icon: 'assets/terminal.ico',
         backgroundColor: '#1e1e1e',
+        frame: false,
         show: false
     });
 
