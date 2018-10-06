@@ -13,6 +13,17 @@
     filter: invert(100%);
 }
 
+html[electron-titlebar-platform=linux] #electron-titlebar > .button.button-close {
+    left: unset;
+    right: 5px;
+}
+html[electron-titlebar-platform=linux] #electron-titlebar > .button.button-maximize {
+    right: 28px;
+}
+html[electron-titlebar-platform=linux] #electron-titlebar > .button.button-minimize {
+    right: 51px;
+}
+
 .etabs-tabs {
     white-space: nowrap;
     display: inline-block;
