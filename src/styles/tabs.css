@@ -5,8 +5,11 @@
     -webkit-app-region: drag;
 }
 
-#electron-titlebar > .button:not(.button-close),
-#electron-titlebar > .button-close:not(:hover) {
+#electron-titlebar > .button {
+    transition: background-color 0.2s;
+}
+
+#electron-titlebar > .button > img {
     filter: invert(100%);
 }
 
@@ -24,7 +27,7 @@
     padding-left: 8px;
     padding-right: 8px;
     background: #404040;
-    transition: background-color 0.25s;
+    transition: background-color 0.2s;
     border-right: 1px solid #303030;
     color: #ffffff;
     height: 24px;
@@ -96,7 +99,7 @@
     background-image: url(../../assets/new-tab.png);
     background-repeat: no-repeat;
     background-position: center;
-    transition: background-color 0.25s;
+    transition: background-color 0.2s;
 }
 
 .etabs-tab-button-new:hover {
